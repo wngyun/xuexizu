@@ -1,0 +1,316 @@
+#VRML V2.0 utf8
+
+Viewpoint {
+    position 0 2 8
+    description "Default View"
+}
+
+NavigationInfo {
+    type ["EXAMINE" "FLY" "WALK"]
+    headlight TRUE
+}
+
+DirectionalLight {
+    direction -0.5 -1 -0.5
+    intensity 0.8
+}
+
+# 翅膀扇动动画 - 左翅膀
+DEF LeftWing Transform {
+    translation 0 0.3 1.0
+    children [
+        Shape {
+            appearance Appearance {
+                material Material {
+                    diffuseColor 0.2 0.4 0.8
+                    specularColor 0.5 0.5 0.5
+                }
+            }
+            geometry Box {
+                size 1.5 0.1 0.6
+            }
+        }
+    ]
+}
+
+# 翅膀扇动动画 - 右翅膀
+DEF RightWing Transform {
+    translation 0 0.3 -1.0
+    children [
+        Shape {
+            appearance Appearance {
+                material Material {
+                    diffuseColor 0.2 0.4 0.8
+                    specularColor 0.5 0.5 0.5
+                }
+            }
+            geometry Box {
+                size 1.5 0.1 0.6
+            }
+        }
+    ]
+}
+
+# 翅膀扇动插值器
+DEF WingFlap OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [
+        1 0 0 -0.5,
+        1 0 0 0.3,
+        1 0 0 -0.5,
+        1 0 0 0.3,
+        1 0 0 -0.5
+    ]
+}
+
+# 翅膀扇动动画定时器
+DEF FlapTimer TimeSensor {
+    cycleInterval 0.8
+    loop TRUE
+}
+
+# 身体起伏动画
+DEF BodyTransform Transform {
+    translation 0 0 0
+    children [
+        # 鸟的身体
+        Transform {
+            translation 0 0 0
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 0.2 0.4 0.8
+                            specularColor 0.5 0.5 0.5
+                        }
+                    }
+                    geometry Sphere {
+                        radius 1.0
+                    }
+                }
+            ]
+        }
+
+        # 鸟的头部
+        Transform {
+            translation 1.2 0.3 0
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 0.3 0.5 0.9
+                            specularColor 0.5 0.5 0.5
+                        }
+                    }
+                    geometry Sphere {
+                        radius 0.5
+                    }
+                }
+            ]
+        }
+
+        # 左眼
+        Transform {
+            translation 1.5 0.4 0.2
+            children [
+                DEF LeftEye Transform {
+                    children [
+                        Shape {
+                            appearance Appearance {
+                                material Material {
+                                    diffuseColor 0 0 0
+                                    emissiveColor 0.1 0.1 0.1
+                                }
+                            }
+                            geometry Sphere {
+                                radius 0.08
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+
+        # 右眼
+        Transform {
+            translation 1.5 0.4 -0.2
+            children [
+                DEF RightEye Transform {
+                    children [
+                        Shape {
+                            appearance Appearance {
+                                material Material {
+                                    diffuseColor 0 0 0
+                                    emissiveColor 0.1 0.1 0.1
+                                }
+                            }
+                            geometry Sphere {
+                                radius 0.08
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+
+        # 喙
+        Transform {
+            translation 1.7 0.2 0
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 1 0.6 0
+                            specularColor 0.5 0.5 0.5
+                        }
+                    }
+                    geometry Cone {
+                        bottomRadius 0.12
+                        height 0.5
+                    }
+                }
+            ]
+        }
+
+        # 尾巴
+        DEF TailTransform Transform {
+            translation -1.3 0.2 0
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 0.1 0.3 0.6
+                            specularColor 0.5 0.5 0.5
+                        }
+                    }
+                    geometry Box {
+                        size 0.8 0.1 0.4
+                    }
+                }
+            ]
+        }
+
+        # 左腿
+        Transform {
+            translation -0.3 -0.8 0.3
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 1 0.6 0
+                            specularColor 0.5 0.5 0.5
+                        }
+                    }
+                    geometry Cylinder {
+                        radius 0.08
+                        height 0.8
+                    }
+                }
+            ]
+        }
+
+        # 右腿
+        Transform {
+            translation -0.3 -0.8 -0.3
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 1 0.6 0
+                            specularColor 0.5 0.5 0.5
+                        }
+                    }
+                    geometry Cylinder {
+                        radius 0.08
+                        height 0.8
+                    }
+                }
+            ]
+        }
+
+        # 左脚
+        Transform {
+            translation -0.3 -1.2 0.3
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 1 0.6 0
+                            specularColor 0.5 0.5 0.5
+                        }
+                    }
+                    geometry Box {
+                        size 0.3 0.05 0.2
+                    }
+                }
+            ]
+        }
+
+        # 右脚
+        Transform {
+            translation -0.3 -1.2 -0.3
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 1 0.6 0
+                            specularColor 0.5 0.5 0.5
+                        }
+                    }
+                    geometry Box {
+                        size 0.3 0.05 0.2
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+# 身体起伏插值器
+DEF BodyBob PositionInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [
+        0 0 0,
+        0 0.15 0,
+        0 0 0,
+        0 0.15 0,
+        0 0 0
+    ]
+}
+
+# 尾巴摇摆插值器
+DEF TailWag OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [
+        0 1 0 0,
+        0 1 0 0.3,
+        0 1 0 0,
+        0 1 0 -0.3,
+        0 1 0 0
+    ]
+}
+
+# 身体动画定时器
+DEF BodyTimer TimeSensor {
+    cycleInterval 1.5
+    loop TRUE
+}
+
+# 尾巴动画定时器
+DEF TailTimer TimeSensor {
+    cycleInterval 1.0
+    loop TRUE
+}
+
+# 连接翅膀动画
+ROUTE FlapTimer.fraction_changed TO WingFlap.set_fraction
+ROUTE WingFlap.value_changed TO LeftWing.rotation
+ROUTE WingFlap.value_changed TO RightWing.rotation
+
+# 连接身体动画
+ROUTE BodyTimer.fraction_changed TO BodyBob.set_fraction
+ROUTE BodyBob.value_changed TO BodyTransform.translation
+
+# 连接尾巴动画
+ROUTE TailTimer.fraction_changed TO TailWag.set_fraction
+ROUTE TailWag.value_changed TO TailTransform.rotation
